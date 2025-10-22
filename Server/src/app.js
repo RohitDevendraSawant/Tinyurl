@@ -15,6 +15,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use('/api/user', require('./routes/user.router'));
+app.use('/api/url', require('./routes/url.route'));
+app.use('/api', require('./routes/url.route'));
+
 app.use(require('./middlewares/ErrorHandler'));
 
 module.exports = app;

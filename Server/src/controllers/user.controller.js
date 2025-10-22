@@ -27,8 +27,6 @@ const register = async (req, res, next) => {
 
        return res.status(201).json(new ApiResponse(201, 'User registered successfully'));
     } catch (error) {
-        console.log("co,ming");
-        
         next(error);
     }
 }
