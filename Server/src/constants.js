@@ -6,7 +6,13 @@ const cookieOptions = {
     sameSite: 'Strict',
 }
 
+const loginRateLimitter = {
+    window: 600, // in secs
+    limit: 5
+}
+
 module.exports = {
     DB_NAME,
     cookieOptions,
+    loginRateLimitter,
 };
