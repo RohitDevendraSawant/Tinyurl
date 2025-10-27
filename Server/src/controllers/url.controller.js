@@ -1,5 +1,5 @@
 const { default: mongoose, mongo, Mongoose } = require("mongoose");
-const Url = require("../db/mongoDb/models/url.model");
+const Url = require("../db/mongoDb/models/Url.model");
 const ApiError = require("../utils/ApiError");
 const ApiResponse = require("../utils/ApiResponse");
 const { getShortUrl } = require("../utils/helper");
