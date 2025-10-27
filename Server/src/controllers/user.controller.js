@@ -3,6 +3,7 @@ const User = require("../db/mongoDb/models/User.model");
 const ApiError = require("../utils/ApiError");
 const ApiResponse = require("../utils/ApiResponse");
 const { generateAccessToken, generateRefreshToken } = require("../utils/helper");
+const jwt = require('jsonwebtoken');
 
 const register = async (req, res, next) => {
     try {
@@ -61,9 +62,42 @@ const login = async (req, res,next) => {
     } catch (error) {
         return next(error);
     }
-}                                     
+}
+
+
+const verifyUser = async (req, res, next) => {
+    try {
+        const accessToken = req.cookies.accessToken;
+        if (!accessToken) return res.status(200).json(new ApiResponse(200, "User authentication status", { authenticated: false }));
+
+        const decoded = await jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+
+        return res.status(200).json(new ApiResponse(200, 'User Authentication status', { authenticated: true, user: decoded }));
+    } catch (error) {
+        next(error);
+    }
+}
+
+const logout = async (req, res, next) => {
+    try {
+        const userId = req.user?.id;
+
+        await User.findByIdAndUpdate(userId, { $unset: { refreshToken: 1 } });
+
+        return res
+            .status(200)
+            .clearCookie("accessToken", cookieOptions)
+            .clearCookie("refreshToken", cookieOptions)
+            .json(new ApiResponse(200, {}, "User logged Out"))
+    } catch (error) {
+        next(error);
+    }
+}
+
 
 module.exports = {
     register,
     login,
+    verifyUser,
+    logout
 }
