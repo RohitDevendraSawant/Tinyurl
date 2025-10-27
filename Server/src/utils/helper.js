@@ -9,7 +9,7 @@ const generateRefreshToken = (payload) => {
 }
 
 const getShortUrl = (key) => {
-    return `${process.env.BASE_URL}/${key}`;
+    return `${process.env.BASE_URL}/api/${key}`;
 }
 
 module.exports = {
