@@ -115,13 +115,15 @@ const getUserUrls = async (req, res, next) => {
                         createdAt: 1
                     }
                 },
-                { $limit: limit },
+                { $sort: { createdAt: -1 } },
                 { $skip: skip },
-                { $sort: { createdAt: -1 } }
+                { $limit: limit },
             ]),
 
             Url.countDocuments({ created_by: userId }),
         ]);
+
+        urls.map((url) => url.shortUrl = getShortUrl(url.key));
         return res.status(200).json(new ApiResponse(200, "Urls fetching success", { urls, totalCount }));
 
     } catch (error) {
@@ -129,8 +131,28 @@ const getUserUrls = async (req, res, next) => {
     }
 }
 
+const deleteUrl = async (req, res, next) => {
+    try {
+        const created_by = req.user?._id;
+        const { urlId } = req.params;
+
+        const url = await Url.findOne({created_by, _id: mongoose.Types.ObjectId(urlId)});
+
+        if(!url){
+            throw new ApiError(404, "Url not found");
+        }
+
+        await Url.deleteOne({_id: mongoose.Types.ObjectId(urlId)});
+
+        return res.status(201).json(new ApiResponse(201, "Url deleted"));
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     createShortUrl,
     redirectToUrl,
     getUserUrls,
+    deleteUrl,
 };
