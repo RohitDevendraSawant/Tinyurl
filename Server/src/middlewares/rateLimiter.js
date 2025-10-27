@@ -16,13 +16,13 @@ const rateLimiter = async (req, res, next) => {
         const attempts = await redisClient.incr(key);
 
         if(attempts === 1){
-            redisClient.expiry(loginRateLimitter.window);
+            await redisClient.expire(key, loginRateLimitter.window);
         }
 
         if(attempts > loginRateLimitter.limit){
-            const ttl = await redisClient.ttl(key);
+            const ttl = await redisClient.ttl(key);  
             throw new ApiError(
-                429, `Too many login attempts. Try again in ${ttl} seconds.`
+                429, `Too many login attempts. Try again in ${Math.ceil(ttl/60)} mins.`
             );
         }
 
