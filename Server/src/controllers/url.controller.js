@@ -136,13 +136,13 @@ const deleteUrl = async (req, res, next) => {
         const created_by = req.user?._id;
         const { urlId } = req.params;
 
-        const url = await Url.findOne({created_by, _id: mongoose.Types.ObjectId(urlId)});
+        const url = await Url.findOne({created_by, _id: new mongoose.Types.ObjectId(urlId)});
 
         if(!url){
             throw new ApiError(404, "Url not found");
         }
 
-        await Url.deleteOne({_id: mongoose.Types.ObjectId(urlId)});
+        await Url.deleteOne({_id: new mongoose.Types.ObjectId(urlId)});
 
         return res.status(201).json(new ApiResponse(201, "Url deleted"));
     } catch (error) {
