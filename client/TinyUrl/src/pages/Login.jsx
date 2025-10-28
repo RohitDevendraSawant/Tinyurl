@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router';
-import { useAuth } from '../context/authContextProvider';
+import { useAuth } from '../context/AuthContextProvider';
 
 const Login = () => {
   const navigate = useNavigate();

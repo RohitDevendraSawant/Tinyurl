@@ -1,6 +1,6 @@
 import Button from './Button';
 import { useNavigate } from 'react-router';
-import { useAuth } from '../context/authContextProvider';
+import { useAuth } from '../context/AuthContextProvider';
 
 const Header = () => {
   const navigate = useNavigate();

@@ -7,7 +7,7 @@ import Login from './pages/Login.jsx';
 import ProtectedRoutes from './components/ProtectedRoutes.jsx';
 import Home from './pages/Home.jsx';
 import Register from './pages/Register.jsx';
-import AuthContextProvider from './context/authContextProvider.jsx';
+import AuthContextProvider from './context/AuthContextProvider.jsx';
 import BackendCheck from './components/BackendCheck.jsx';
 
 const appRouter = createBrowserRouter([

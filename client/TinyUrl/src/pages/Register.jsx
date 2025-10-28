@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import Button from '../components/Button'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
-import { useAuth } from '../context/authContextProvider'
+import { useAuth } from '../context/AuthContextProvider'
 
 const Register = () => {
     const navigate = useNavigate();
