@@ -2,6 +2,7 @@ const DB_NAME = 'tinyurl';
 
 const ALLOWED_ORIGIN= [
   'http://localhost:5173',
+  'https://yourtinyurl.netlify.app',
 ]
 
 const isProduction = process.env.ENV === 'production';
