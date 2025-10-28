@@ -67,7 +67,7 @@ const login = async (req, res,next) => {
 
 const verifyUser = async (req, res, next) => {
     try {
-        const accessToken = req.cookies.accessToken;
+        const accessToken = req.cookies.accessToken || req.headers.authorization?.split(' ')[1];
         if (!accessToken) return res.status(200).json(new ApiResponse(200, "User authentication status", { authenticated: false }));
 
         const decoded = await jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
