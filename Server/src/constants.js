@@ -4,10 +4,12 @@ const ALLOWED_ORIGIN= [
   'http://localhost:5173',
 ]
 
+const isProduction = process.env.ENV === 'production';
+
 const cookieOptions = {
   httpOnly: true,
-  secure: false,
-  sameSite: 'lax',  
+  secure: isProduction,
+  sameSite: isProduction ? 'none' : 'lax',  
   path: '/',
   maxAge: 1000 * 60 * 60 * 24 * 1 // 1D
 }
