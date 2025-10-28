@@ -91,9 +91,9 @@ const Register = () => {
                     {error && <p className='text-red-500 text-sm text-center -mt-3'>{error}</p>}
 
                     <Button
-                        className={!email || !password || !confirmPassword ?
+                        className={`sm:w-full w-full ${!email || !password || !confirmPassword ?
                             'opacity-50 cursor-not-allowed' : ''
-                        }
+                        }`}
                         btnText='Register'
                     />
                 </form>

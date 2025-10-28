@@ -82,7 +82,7 @@ const Login = () => {
           <Button
             btnText={loading ? 'Logging in...' : 'Login'}
             disabled={!email || !password || loading}
-            className={`${
+            className={`sm:w-full w-full ${
               (!email || !password || loading) ? 'opacity-50 cursor-not-allowed' : ''
             }`}
           />

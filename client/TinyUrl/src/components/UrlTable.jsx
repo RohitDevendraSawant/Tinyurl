@@ -42,7 +42,7 @@ const UrlTable = ({ urlList = [], handleDelete }) => {
                 </td>
 
                 <td className="px-6 py-3 border-t border-gray-700">
-                  <div className="flex justify-between items-center">
+                  <div className="flex flex-col sm:flex-row justify-between items-center">
                     <a
                       href={url.shortUrl}
                       target="_blank"

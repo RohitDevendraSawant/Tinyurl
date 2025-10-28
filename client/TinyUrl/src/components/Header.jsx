@@ -16,7 +16,7 @@ const Header = () => {
   return (
     <div className='bg-gray-900 p-2'>
       <div className='flex items-center justify-around h-18'>
-        <p className='font-extrabold text-3xl text-white'>TinyUrl</p>
+        <p className='font-extrabold text-2xl sm:text-3xl text-white'>TinyUrl</p>
         {
           !user ? (
             <div className='flex gap-2 items-center'>

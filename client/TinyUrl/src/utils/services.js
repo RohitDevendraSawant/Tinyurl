@@ -1,6 +1,5 @@
 const api_base_url = import.meta.env.VITE_SERVER_BASE_URL;
 
-// 🧩 helper to always get the latest token
 const getToken = () => localStorage.getItem('accessToken');
 
 // ---------- REGISTER ----------
