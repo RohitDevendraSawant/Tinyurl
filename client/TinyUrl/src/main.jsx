@@ -8,6 +8,7 @@ import ProtectedRoutes from './components/ProtectedRoutes.jsx';
 import Home from './pages/Home.jsx';
 import Register from './pages/Register.jsx';
 import AuthContextProvider from './context/authContextProvider.jsx';
+import BackendCheck from './components/BackendCheck.jsx';
 
 const appRouter = createBrowserRouter([
   {
@@ -39,7 +40,9 @@ const appRouter = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthContextProvider>
-      <RouterProvider router={appRouter} />
+      <BackendCheck> 
+        <RouterProvider router={appRouter} />
+      </BackendCheck>
     </AuthContextProvider>
   </StrictMode>,
 )
