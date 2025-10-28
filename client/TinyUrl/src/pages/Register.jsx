@@ -38,10 +38,13 @@ const Register = () => {
         setLoading(true);
 
         try {
-            const res = await registerUser({ email, password, confirmPassword });
-
+            const res = await register({ email, password, confirmPassword });
+            
             if (res.success) {
                 navigate('/login');
+            }
+            else if (res.statusCode === 409) {
+                setError(res.message);
             }
             else {
                 setError("Something went wronng");
