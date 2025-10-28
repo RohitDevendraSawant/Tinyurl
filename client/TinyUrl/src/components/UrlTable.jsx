@@ -1,4 +1,4 @@
-const UrlTable = ({ urlList = [] }) => {
+const UrlTable = ({ urlList = [], handleDelete }) => {
   const copyUrl = (text) => {
     navigator.clipboard.writeText(text);
   }
@@ -53,7 +53,7 @@ const UrlTable = ({ urlList = [] }) => {
                     </a>
                     <div className="flex gap-4">
                       <img className="w-4 cursor-pointer" onClick={() => copyUrl(url.shortUrl)} src="/assets/copy.svg" alt="copy" />
-                      <img className="w-4 cursor-pointer" onClick={() => copyUrl(url.shortUrl)} src="/assets/delete.svg" alt="copy" />
+                      <img className="w-4 cursor-pointer" onClick={() => handleDelete(url._id)} src="/assets/delete.svg" alt="delete" />
                     </div>
                   </div>
                 </td>

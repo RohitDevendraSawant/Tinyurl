@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import Button from "../components/Button";
 import UrlTable from '../components/UrlTable';
-import { fetchUrls, shortenUrl } from '../utils/services';
+import { deleteUrl, fetchUrls, shortenUrl } from '../utils/services';
 import { urlLimit, urlSkip } from '../constants';
 
 const Home = () => {
   const [url, setUrl] = useState('');
+  const [urlToShow, setUrlToShow] = useState(null);
   const [urlList, setUrlList] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -39,6 +40,9 @@ const Home = () => {
         return;
       }
       setUrl('');
+      console.log(res.data.shortUrl);
+
+      setUrlToShow(res?.data?.shortUrl);
       setSkip(0);
 
       await getUrls('');
@@ -88,6 +92,16 @@ const Home = () => {
     setSkip((prev) => prev + 10);
   }
 
+  const handleDelete = async (urlId) => {
+    const res = await deleteUrl(urlId);
+    if (res.success) {
+      getUrls('');
+    }
+    else {
+      alert("Failed to delete URL..please try again later");
+    }
+  }
+
   useEffect(() => {
     getUrls('');
   }, [skip]);
@@ -102,6 +116,9 @@ const Home = () => {
         </form>
       </div>
       {error && <p className='text-red-500 text-sm text-center -mt-3'>{error}</p>}
+      <div className='text-center'>
+        {urlToShow && <a href={urlToShow} target='_blank' className='text-amber-400 text-lg text-center mt-3'>{urlToShow}</a>}
+      </div>
       <div className='p-16'>
         <div className='flex justify-between'>
           <div className='my-3 flex gap-3 grow'>
@@ -112,14 +129,14 @@ const Home = () => {
           </div>
           <div className='flex gap-2 items-center mx-4'>
             <img src="/assets/prev.svg" className='w-10' alt="prev" onClick={handlePrev} />
-            <p>{Math.floor(skip / limit) + 1} / {pages}</p>
+            <p>{pages === 0 ? 0 : Math.floor(skip / limit) + 1} / {pages}</p>
             <img src="/assets/next.svg" className='w-10' alt="next" onClick={handleNext} />
           </div>
         </div>
         {
           !urlList.length
             ? <p className='text-2xl font-semibold text-center mt-6'>No urls found</p>
-            : <UrlTable urlList={urlList} />
+            : <UrlTable urlList={urlList} handleDelete={handleDelete} />
         }
       </div>
 
