@@ -35,6 +35,7 @@ export const AuthContextProvider = ({ children }) => {
         headers: { "Content-Type": "application/json", "authorization": `Bearer ${accessToken}` },
 
       });
+      localStorage.removeItem('accessToken');
       setUser(false);
     } catch (err) {
       console.error("Logout failed:", err);

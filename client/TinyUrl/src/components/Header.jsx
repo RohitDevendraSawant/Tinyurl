@@ -4,7 +4,9 @@ import { useAuth } from '../context/AuthContextProvider';
 
 const Header = () => {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
+
+  const user = localStorage.getItem('accessToken');
 
   const handleLogout = () => {
     logout();
