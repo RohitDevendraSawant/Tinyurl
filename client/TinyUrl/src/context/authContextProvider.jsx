@@ -1,34 +1,10 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import {  useContext, useState } from "react";
 import AuthContext from "./AuthContext";
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   const api_base_url = import.meta.env.VITE_SERVER_BASE_URL;
-
-  // Verify user session on page load
-  useEffect(() => {
-    const verifyUser = async () => {
-      try {
-        const res = await fetch(`${api_base_url}/api/user/verify`, {
-          credentials: "include",
-        });
-        const data = await res.json();
-        console.log("Verify user:", data);
-
-        // setUser to actual user object from backend
-        setUser(data.data.authenticated ? data.data.authenticated : null);
-      } catch (err) {
-        setUser(null);
-        console.error("Auth verification failed:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    verifyUser();
-  }, [api_base_url]);
 
   // Login function
   const login = async ({ email, password }) => {
@@ -41,10 +17,7 @@ export const AuthContextProvider = ({ children }) => {
       });
 
       const data = await res.json();
-      console.log("Login response:", data);
-
-      // setUser to actual user object
-      setUser(data.success); 
+      setUser(data.success);
       return data;
     } catch (err) {
       console.error("Login failed:", err);
@@ -55,9 +28,12 @@ export const AuthContextProvider = ({ children }) => {
   // Logout function
   const logout = async () => {
     try {
+      const accessToken = localStorage.getItem('accessToken');
       await fetch(`${api_base_url}/api/user/logout`, {
         method: "GET",
         credentials: "include",
+        headers: { "Content-Type": "application/json", "authorization": `Bearer ${accessToken}` },
+
       });
       setUser(false);
     } catch (err) {
@@ -76,9 +52,6 @@ export const AuthContextProvider = ({ children }) => {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Registration failed");
-
-      // user is NOT logged in yet
       return data;
     } catch (err) {
       console.error("Registration failed:", err);
@@ -87,7 +60,7 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, register }}>
+    <AuthContext.Provider value={{ user, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );

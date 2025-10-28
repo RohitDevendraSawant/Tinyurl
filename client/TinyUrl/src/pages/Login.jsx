@@ -28,6 +28,8 @@ const Login = () => {
       const res = await login({email, password});
       
       if(res.success){
+        const accessToken = res?.data?.accessToken;
+        localStorage.setItem('accessToken', accessToken);        
         navigate("/");
       }
       else if(res.statusCode === 429){
